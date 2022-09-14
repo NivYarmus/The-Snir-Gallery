@@ -1,0 +1,18 @@
+{% extends 'components/base.html' %}
+
+
+{% block style %}
+    <link rel="stylesheet" href={{ url_for('static', filename='styles/arts.css') }}/>
+{% endblock %}
+
+{% block content %}
+    <ul class="Arts list-group">
+        <li class="Art">
+            <h5>{{ art.name }}</h5>
+            <h6>מאת {{ art.artist }}</h6>
+            <h6>נוצר בתאריך {{ art.creation_date }}</h6>
+            <img src="{{ art.path }}">
+            <p class="Information">{{ art.description }}</p>
+        </li>
+    </ul>
+{% endblock %}

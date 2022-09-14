@@ -1,0 +1,25 @@
+img
+{
+    object-fit: contain;
+    width: 40%;
+    height: 100%;
+}
+
+.Arts
+{
+    padding-top: 2%;
+    text-align: center;
+    display: block;
+}
+
+.Art{
+    padding-bottom: 5%;
+    display: inline-block;
+}
+
+.Information{
+    text-align: center;
+    font-size: small;
+    display: block;
+    padding-top: 0.5%;
+}
