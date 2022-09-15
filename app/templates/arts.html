@@ -8,7 +8,11 @@
 {% block content %}
     <ul class="Arts list-group">
         {% for art in arts %}
-            <li class="Art">
+            <li class="Art"
+            {% if loop.last %}
+                style="margin-bottom: 20px;"
+            {% endif %}
+            >
                 <h5>{{ art.name }}</h5>
                 <a href="./artdetails?name={{ art.name }}">
                     <img src="{{ art.path }}">
