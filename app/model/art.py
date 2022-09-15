@@ -1,4 +1,4 @@
-ART_PATH = '../images/arts'
+ART_PATH = './images/arts'
 ART_EXTENSION_TYPE = '.jpg'
 
 
