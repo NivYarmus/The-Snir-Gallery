@@ -51,3 +51,7 @@ def build_art_object_from_dao(details):
     art = Art(id, artist, name, description, creation_date)
 
     return art
+
+
+if __name__ == '__main__':
+    APP.run(host='0.0.0.0', port=80)
