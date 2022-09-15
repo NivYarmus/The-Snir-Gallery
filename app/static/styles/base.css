@@ -11,12 +11,13 @@ body
 {
     margin-top: 1%;
     text-align: center;
+    display: block;
 }
 
 .Menu-Item
 {
     color: rgb(0, 0, 0);
-    text-decoration: none !important;
+    display: inline-block;
 }
 
 .Footer
