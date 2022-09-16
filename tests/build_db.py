@@ -21,12 +21,13 @@ def create_db():
     """
 
 
-def insert_art():
+def insert_art(n):
+    val = str(n)
 
-    name = "Artist(s)"
-    art = "Art name"
-    desc = "Art description"
-    date = "Art creation date"
+    name = val
+    art = val
+    desc = val
+    date = val
 
     return f"""
         INSERT INTO Arts
@@ -41,14 +42,9 @@ if __name__ == '__main__':
     curr = conn.cursor()
 
     #curr.execute(delete_table())
-    #curr.execute(create_db())
-    #curr.execute(insert_art())
-
-    curr.execute("""
-        UPDATE Arts
-        SET IsVideoIncluded = 1
-        WHERE ID = 1;
-    """)
+    curr.execute(create_db())
+    for _ in range(1, 15):
+        curr.execute(insert_art(_))
     
     conn.commit()
 

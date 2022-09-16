@@ -10,7 +10,7 @@
         <li class="Art" style="margin-bottom: 20px;">
             <h5>{{ art.name }}</h5>
             <h6>מאת {{ art.artists }}</h6>
-            <h6>נוצר בתאריך {{ art.creation_date }}</h6>
+            <h6>נוצר ב{{art.creation_date}}</h6>
 
             {% if art.is_video_included %}
                 <video controls autoplay loop>
