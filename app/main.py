@@ -5,6 +5,7 @@ from model.art import Art, ArtIntro
 
 
 APP = flask.Flask(__name__, static_url_path='/')
+#APP.config['SERVER_NAME'] = 'thesnirgallery.com'
 
 DAO = Dao()
 
@@ -15,14 +16,14 @@ def home_page():
     return flask.render_template('home.html')
 
 
-@APP.get('/arts')
-def arts_page():
+@APP.get('/gallery')
+def gallery_page():
     arts_details = DAO.get_arts()
 
     if arts_details:
         arts = (build_art_intro_object_from_dao(art_details) for art_details in arts_details)
 
-        return flask.render_template('arts.html', arts=arts)
+        return flask.render_template('gallery.html', arts=arts)
     
     return flask.redirect('/')
 
