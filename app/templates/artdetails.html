@@ -9,9 +9,17 @@
     <ul class="Arts list-group">
         <li class="Art" style="margin-bottom: 20px;">
             <h5>{{ art.name }}</h5>
-            <h6>מאת {{ art.artist }}</h6>
+            <h6>מאת {{ art.artists }}</h6>
             <h6>נוצר בתאריך {{ art.creation_date }}</h6>
-            <img src="{{ art.path }}">
+
+            {% if art.is_video_included %}
+                <video controls autoplay loop>
+                    <source src="{{ art.video_path }}" type="video/mp4">
+                </video>
+            {% else %}
+                <img src="{{ art.image_path }}">
+            {% endif %}
+
             <p class="Information">{{ art.description }}</p>
         </li>
     </ul>

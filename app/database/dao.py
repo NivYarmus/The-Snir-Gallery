@@ -5,14 +5,15 @@ class Dao:
     """
         TABLE Arts (
             ID INTEGER PRIMARY KEY AUTOINCREMENT,
-            Artist TEXT NOT NULL,
+            Artists TEXT NOT NULL,
             Name TEXT UNIQUE NOT NULL,
-            Description TEXT
-            Creation_Date TEXT NOT NULL
+            Description TEXT NOT NULL
+            Creation_Date TEXT NOT NULL,
+            IsVideoIncluded INTEGER NOT NULL
         )
     """
 
-    DATABASE_PATH = './database/arts.db'
+    DATABASE_PATH = './database/gallery.db'
 
     def __init__(self):
         self.__conn = None

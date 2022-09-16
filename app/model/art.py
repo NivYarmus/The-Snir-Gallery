@@ -1,20 +1,12 @@
-ART_PATH = './images/arts'
-ART_EXTENSION_TYPE = '.jpg'
+from .artConstants import ART_IMAGE_PATH, ART_VIDEO_PATH, ART_IMAGE_EXTENSION_TYPE, ART_VIDEO_EXTENSION_TYPE
 
 
 class Art:
-    def __init__(self, id, artist, name, description, creation_date):
+    def __init__(self, id, artists, name, description, creation_date, is_video_included):
         self.name = name
-        self.artist = artist
+        self.artists = artists
         self.description = description
         self.creation_date = creation_date
-        self.path = f"{ART_PATH}/{id}{ART_EXTENSION_TYPE}"
-
-
-class ArtIntro:
-    SHORT_DESCRIPTION_MAX_LENGTH = 50
-
-    def __init__(self, id, name, description):
-        self.name = name
-        self.short_description = description[:ArtIntro.SHORT_DESCRIPTION_MAX_LENGTH] + '...' if len(description) > ArtIntro.SHORT_DESCRIPTION_MAX_LENGTH else description
-        self.path = f"{ART_PATH}/{id}{ART_EXTENSION_TYPE}"
+        self.is_video_included = is_video_included
+        self.image_path = f"{ART_IMAGE_PATH}/{id}{ART_IMAGE_EXTENSION_TYPE}"
+        self.video_path = f"{ART_VIDEO_PATH}/{id}{ART_VIDEO_EXTENSION_TYPE}"

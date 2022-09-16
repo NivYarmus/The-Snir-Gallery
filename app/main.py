@@ -1,7 +1,8 @@
 import flask
 
 from database.dao import Dao
-from model.art import Art, ArtIntro
+from model.art import Art
+from model.artIntro import ArtIntro
 
 
 APP = flask.Flask(__name__, static_url_path='/')
@@ -42,14 +43,14 @@ def art_details_page():
 
 
 def build_art_intro_object_from_dao(details):
-    id, name, description = details
-    art_intro = ArtIntro(id, name, description)
+    art_id, name, description = details
+    art_intro = ArtIntro(art_id, name, description)
 
     return art_intro
 
 def build_art_object_from_dao(details):
-    id, artist, name, description, creation_date = details
-    art = Art(id, artist, name, description, creation_date)
+    art_id, artists, name, description, creation_date, is_video_included = details
+    art = Art(art_id, artists, name, description, creation_date, is_video_included)
 
     return art
 
