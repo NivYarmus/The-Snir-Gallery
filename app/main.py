@@ -1,5 +1,7 @@
 import flask
 
+from typing import List, Tuple, Union
+
 from database.dao import Dao
 from model.art import Art
 from model.artIntro import ArtIntro
@@ -12,12 +14,12 @@ DAO = Dao()
 
 @APP.get('/')
 @APP.get('/home')
-def home_page():
+def home_page() -> str:
     return flask.render_template('client/home.html')
 
 
 @APP.get('/gallery')
-def gallery_page():
+def gallery_page() -> Union[str,flask.Response]:
     arts_details = DAO.get_arts()
 
     if arts_details:
@@ -29,7 +31,7 @@ def gallery_page():
 
 
 @APP.get('/artdetails')
-def art_details_page():
+def art_details_page() -> Union[str,flask.Response]:
     name = flask.request.args.get('name', default='', type=str)
     art_details = DAO.get_art(name)
 
@@ -41,14 +43,14 @@ def art_details_page():
     return flask.redirect('/')
 
 
-def build_art_intro_object_from_dao(details):
+def build_art_intro_object_from_dao(details : List[Tuple[int, str, str]]) -> ArtIntro:
     art_id, name, description = details
     art_intro = ArtIntro(art_id, name, description)
 
     return art_intro
 
 
-def build_art_object_from_dao(details):
+def build_art_object_from_dao(details : List[Tuple[int, str, str, str, int]]) -> Art:
     art_id, artists, name, description, creation_date, is_video_included = details
     art = Art(art_id, artists, name, description, creation_date, is_video_included)
 

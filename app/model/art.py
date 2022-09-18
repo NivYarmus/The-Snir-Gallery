@@ -1,8 +1,10 @@
+from typing import Self
+
 from .artConstants import ART_IMAGE_PATH, ART_VIDEO_PATH, ART_IMAGE_EXTENSION_TYPE, ART_VIDEO_EXTENSION_TYPE
 
 
 class Art:
-    def __init__(self, id, artists, name, description, creation_date, is_video_included):
+    def __init__(self : Self, id : int, artists : str, name : str, description : str, creation_date : str, is_video_included : int) -> None:
         self.name = name
         self.artists = artists
         self.description = description

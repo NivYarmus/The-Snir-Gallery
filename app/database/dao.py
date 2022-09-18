@@ -1,5 +1,6 @@
 import sqlite3
-import json
+
+from typing import List, Tuple, Self
 
 
 class Dao:
@@ -16,28 +17,28 @@ class Dao:
 
     DATABASE_PATH = './database/gallery.db'
 
-    def __init__(self):
+    def __init__(self : Self) -> None:
         self.__conn = None
         self.__curr = None
 
         self.__create_arts_table()
 
-    def __open_db(self):
+    def __open_db(self : Self) -> None:
         self.__conn = sqlite3.connect(Dao.DATABASE_PATH)
         self.__curr = self.__conn.cursor()
 
-    def __close_db(self):
+    def __close_db(self : Self) -> None:
         self.__curr = None
         self.__conn.close()
 
-    def __execute_query(self, query, *args):
+    def __execute_query(self : Self, query : str, *args : List[str]) -> None:
         self.__open_db()
         result = self.__curr.execute(query, args).fetchall()
         self.__close_db()
 
         return result
 
-    def __execute_query_and_save(self, query, *args):
+    def __execute_query_and_save(self : Self, query : str, *args : List[str]) -> None:
         self.__open_db()
         result = self.__curr.execute(query, args).fetchall()
         self.__save_changes()
@@ -45,10 +46,10 @@ class Dao:
 
         return result
 
-    def __save_changes(self):
+    def __save_changes(self : Self) -> None:
         self.__conn.commit()
     
-    def __create_arts_table(self):
+    def __create_arts_table(self : Self) -> None:
         query = """
             CREATE TABLE IF NOT EXISTS Arts
             (
@@ -61,9 +62,9 @@ class Dao:
             );
         """
 
-        return self.__execute_query_and_save(query)
+        self.__execute_query_and_save(query)
 
-    def get_arts(self):
+    def get_arts(self : Self) -> List[Tuple[int, str, str]]:
         query = """
             SELECT ID, Name, Description
             FROM Arts;
@@ -71,7 +72,7 @@ class Dao:
 
         return self.__execute_query(query)
 
-    def get_art(self, name):
+    def get_art(self : Self, name : str) -> List[Tuple[int, str, str, str, int]]:
         query = """
             SELECT *
             FROM Arts
