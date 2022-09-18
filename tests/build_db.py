@@ -43,13 +43,11 @@ def insert_art(n):
 
 
 if __name__ == '__main__':
-    conn = sqlite3.connect('./App/database/gallery.db')
+    conn = sqlite3.connect('./App/database/gallery_dev.db')
     curr = conn.cursor()
 
     #curr.execute(delete_table())
     #curr.execute(create_db())
-    
-    curr.execute(delete_item(22))
     
     conn.commit()
 
