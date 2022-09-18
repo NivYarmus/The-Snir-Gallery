@@ -79,38 +79,3 @@ class Dao:
         """
 
         return self.__execute_query(query, name)
-
-    def get_arts_names(self):
-        query = """
-            SELECT Name
-            FROM Arts;
-        """
-
-        return self.__execute_query(query)
-
-    def add_new_art(self):
-        query = """
-            INSERT INTO
-            Arts (Artists, Name, Description, Creation_Date, IsVideoIncluded)
-            VALUES ('0', '0', '0', '0', 0);
-        """
-
-        self.__execute_query_and_save(query)
-        
-        query = """
-            UPDATE Arts
-            SET
-            Artists = ID,
-            Name = ID,
-            Description = ID,
-            Creation_Date = ID
-            WHERE Name = '0';
-        """
-
-        self.__execute_query_and_save(query)
-        
-        query = """
-            SELECT MAX(ID) FROM Arts;
-        """
-
-        return self.__execute_query(query)
