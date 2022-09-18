@@ -57,9 +57,12 @@ def admin_panel():
         return flask.redirect('/')
 
     arts_names = DAO.get_arts_names()
-    arts = (build_art_name_object_from_dao(art_name) for art_name in arts_names)
+    arts_names = (x[0] for x in arts_names)
 
-    return flask.render_template('admin/adminpanel.html', arts=arts)
+    if 'new_name' in flask.request.args:
+        return flask.render_template('admin/adminpanel.html', names=arts_names, new_name=flask.request.args['new_name'])
+
+    return flask.render_template('admin/adminpanel.html', names=arts_names)
 
 @APP.post('/login', subdomain='admin')
 def admin_login_handle():
@@ -80,7 +83,7 @@ def admin_add_art():
 
     new_art_id = DAO.add_new_art()[0][0]
     
-    return flask.redirect('/adminpanel')
+    return flask.redirect(flask.url_for('.admin_panel', new_name=str(new_art_id)))
 
 
 def build_art_intro_object_from_dao(details):

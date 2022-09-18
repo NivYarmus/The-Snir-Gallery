@@ -49,7 +49,7 @@ if __name__ == '__main__':
     #curr.execute(delete_table())
     #curr.execute(create_db())
     
-    curr.execute(delete_item(16))
+    curr.execute(delete_item(22))
     
     conn.commit()
 

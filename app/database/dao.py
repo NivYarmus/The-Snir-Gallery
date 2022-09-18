@@ -64,7 +64,7 @@ class Dao:
     
     def get_arts_names(self):
         query = """
-            SELECT ID, Name
+            SELECT Name
             FROM Arts;
         """
         

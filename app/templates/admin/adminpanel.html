@@ -8,8 +8,8 @@
     <body>
         <div>
             <select>
-                {% for art in arts %}
-                    <option value={{ art.name }}>{{ art.name }}</option>
+                {% for name in names %}
+                    <option value={{ name }}>{{ name }}</option>
                 {% endfor %}
             </select>
 
@@ -17,8 +17,11 @@
                 <button type="submit">New</submit>
             </form>
         </div>
-
-        <div>
-        </div>
     </body>
 </html>
+
+{% if new_name %}
+    <script>
+        alert("New art created under name: " + new_name);
+    </script>
+{% endif %}

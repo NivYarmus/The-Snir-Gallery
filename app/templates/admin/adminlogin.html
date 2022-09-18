@@ -10,9 +10,6 @@
     </head>
     <body>
         <div class="card">
-            {% if display_error == 'True' %}
-                <h6 style="color: #ff0000">Username and/or password incorrect</h6>
-            {% endif %}
             <form method="post" action="{{ url_for('admin_login_handle') }}">
                 <label for="username">Username: </label>
                 <input type="text" id="username" name="username">
@@ -25,3 +22,9 @@
         </div>
     </body>
 </html>
+
+{% if display_error == 'True' %}
+    <script>
+        alert("Username and/or password incorrect");
+    </script>
+{% endif %}
