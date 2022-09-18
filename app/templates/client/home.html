@@ -1,0 +1,29 @@
+{% extends 'components/base.html' %}
+
+
+{% block style %}
+<link rel="stylesheet" href={{ url_for('static', filename='styles/home.css') }}/>
+{% endblock %}
+
+{% block content %}
+    <div class="Title">
+        <h2>גלריית שניר</h2>
+        <h5>מאת יוסף שניר</h5>
+    </div>
+
+    <div class="Information_Menu">
+        <div class="Information">
+            <h4>קצת עליי</h4>
+            <p>
+                מידע רנדומלי בלה בלה בלה
+            </p>
+        </div>
+    
+        <div class="Information">
+            <h4>על הגלריה</h4>
+            <p>
+                מידע רנדומלי בלה בלה בלה
+            </p>
+        </div>
+    </div>
+{% endblock %}

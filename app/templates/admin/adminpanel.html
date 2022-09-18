@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>The Snir Gallery ADMIN</title>
+        <meta charset="Windows-1255">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>
+            <select>
+                {% for art in arts %}
+                    <option value={{ art.name }}>{{ art.name }}</option>
+                {% endfor %}
+            </select>
+
+            <form method="post" action="{{ url_for('admin_add_art') }}">
+                <button type="submit">New</submit>
+            </form>
+        </div>
+
+        <div>
+        </div>
+    </body>
+</html>

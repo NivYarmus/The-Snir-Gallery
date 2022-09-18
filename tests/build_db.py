@@ -6,6 +6,11 @@ def delete_table():
         DROP TABLE Arts;
     """
 
+def delete_item(id):
+    return f"""
+        DELETE FROM Arts
+        WHERE ID = {id};
+    """
 
 def create_db():
     return """
@@ -42,9 +47,9 @@ if __name__ == '__main__':
     curr = conn.cursor()
 
     #curr.execute(delete_table())
-    curr.execute(create_db())
-    for _ in range(1, 15):
-        curr.execute(insert_art(_))
+    #curr.execute(create_db())
+    
+    curr.execute(delete_item(16))
     
     conn.commit()
 
