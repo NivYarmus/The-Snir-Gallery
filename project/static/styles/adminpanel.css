@@ -1,0 +1,12 @@
+input
+{
+    display: block;
+}
+
+img, video
+{
+    object-fit: contain;
+    width: 40%;
+    height: 100%;
+    display: block;
+}

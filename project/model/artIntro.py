@@ -1,6 +1,6 @@
 from typing import Self
 
-from .artConstants import ART_IMAGE_PATH, ART_IMAGE_EXTENSION_TYPE, SHORT_DESCRIPTION_MAX_LENGTH
+from model.constants import ART_IMAGE_PATH, ART_IMAGE_EXTENSION_TYPE, SHORT_DESCRIPTION_MAX_LENGTH
 
 
 class ArtIntro:

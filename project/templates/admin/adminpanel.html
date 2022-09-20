@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>The Snir Gallery Admin</title>
+        <meta charset="Windows-1255">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- BootStrap Scripts-->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+        <!-- BootStrap Style -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+
+        <link rel="stylesheet" href={{ url_for('static', filename='styles/adminpanel.css') }}/>
+
+        <script type="text/javascript" src={{ url_for('static', filename='scripts/adminpanel.js') }}></script>
+    </head>
+    <body>
+        <div class="accordion">
+            <div class="card">
+                <div class="card-header">
+                    <div data-toggle="collapse" data-target="#add">New Art</div>
+                </div>
+                <div class="card-body collapse" id="add">
+                    <form method="post" enctype="multipart/form-data" action="{{ url_for('admin_add_art') }}">
+                        <label for="artists">Artists:</label>
+                        <input type="text" id="artists" name="artists" required>
+
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" required>
+
+                        <label for="description">Description:</label>
+                        <input type="text" id="description" name="description" required>
+
+                        <label for="creation_date">Creation Date:</label>
+                        <input type="text" id="creation_date" name="creation_date" required>
+
+                        <label for="image">Select a JPEG image:</label>
+                        <input type="file" accept="image/jpeg" onchange="Preview('imageUpload', 'imagePreview');" id="imageUpload" name="image" required>
+                        <img id="imagePreview">
+
+                        <label for="video">Select a MP3 video (not mandetory):</label>
+                        <input type="file" accept="video/mp3" onchange="Preview('videoUpload', 'videoPreview');" id="videoUpload" name="video">
+                        <img id="videoPreview">
+
+                        <input type="submit" value="Add Art">
+                    </form>
+                </div>
+
+                <div class="card-header">
+                    <div data-toggle="collapse" data-target="#edit">Edit Art</div>
+                </div>
+                <div class="card-body collapse" id="edit">
+                    Coming soon...
+                </div>
+
+                <div class="card-header">
+                    <div data-toggle="collapse" data-target="#delete">Delete Art</div>
+                </div>
+                <div class="card-body collapse" id="delete">
+                    Coming soon...
+                </div>
+            </div>
+        </div>
+    </body>
+
+    {% if message|length > 0 %}
+        <script>
+            alert('{{ message }}');
+        </script>
+    {% endif %}
+</html>

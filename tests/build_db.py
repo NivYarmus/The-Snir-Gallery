@@ -21,7 +21,7 @@ def create_db():
             Name TEXT UNIQUE NOT NULL,
             Description TEXT NOT NULL,
             Creation_Date TEXT NOT NULL,
-            IsVideoIncluded INTEGER NOT NULL
+            Is_Video_Included INTEGER NOT NULL
         );
     """
 
@@ -36,18 +36,17 @@ def insert_art(n):
 
     return f"""
         INSERT INTO Arts
-        (Artists, Name, Description, Creation_Date, IsVideoIncluded)
+        (Artists, Name, Description, Creation_Date, Is_Video_Included)
         VALUES
         ('{name}', '{art}', '{desc}', '{date}', 0);
     """
 
 
 if __name__ == '__main__':
-    conn = sqlite3.connect('./App/database/gallery_dev.db')
+    conn = sqlite3.connect('./project/database/gallery.db')
     curr = conn.cursor()
 
-    #curr.execute(delete_table())
-    #curr.execute(create_db())
+    curr.execute(delete_item(23))
     
     conn.commit()
 

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>The Snir Gallery Admin</title>
+        <meta charset="Windows-1255">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- BootStrap Style -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="card">
+            <form method="post" action="{{ url_for('admin_login') }}">>
+                <label class="card-header" for="username">Username:</label>
+                <input class="card-body" id="username" name="username">
+
+                <label class="card-header" for="password">Password:</label>
+                <input class="card-body" id="password" name="password">
+
+                <input type="submit" value="Login">
+            </form>
+        </div>
+    </body>
+
+    {% if message|length > 0 %}
+        <script>
+            alert('{{ message }}');
+        </script>
+    {% endif %}
+</html>

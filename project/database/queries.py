@@ -6,7 +6,7 @@
         Name TEXT UNIQUE NOT NULL,
         Description TEXT NOT NULL
         Creation_Date TEXT NOT NULL,
-        IsVideoIncluded INTEGER NOT NULL
+        Is_Video_Included INTEGER NOT NULL
     )
 """
 
@@ -19,7 +19,7 @@ CREATE_ARTS_TABLE_QUERY =   """
                                 Name TEXT UNIQUE NOT NULL,
                                 Description TEXT NOT NULL,
                                 Creation_Date TEXT NOT NULL,
-                                IsVideoIncluded INTEGER NOT NULL
+                                Is_Video_Included INTEGER NOT NULL
                             );
                             """
 
@@ -33,3 +33,16 @@ GET_ART_QUERY = """
                 FROM Arts
                 WHERE Name = ?;
                 """
+
+ADD_ART_QUERY = """
+                INSERT INTO
+                Arts (Artists, Name, Description, Creation_Date, Is_Video_Included)
+                VALUES (?, ?, ? ,?, ?);
+                """
+
+GET_MAX_ID_QUERY = """
+                    SELECT
+                    MAX(ID)
+                    FROM
+                    Arts;
+                    """

@@ -1,2 +1,2 @@
 Flask=2.2.2
-pyopenssl=22.0.0
+Flask-Session=0.4.0
