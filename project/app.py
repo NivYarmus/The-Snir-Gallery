@@ -7,6 +7,7 @@ from database.dao import Dao
 from uploadsManager.uploadsManager import UploadsManager
 from model.art import Art
 from model.artIntro import ArtIntro
+from model.artName import ArtName
 
 
 APP = flask.Flask(__name__, static_url_path='/')
@@ -60,9 +61,9 @@ def build_art_object_from_dao(details : List[Tuple[int, str, str, str, int]]) ->
 
 
 @APP.get('/', subdomain='admin')
-def admin_login_page() -> str:
-    if flask.request.args:
-        return flask.render_template('admin/adminlogin.html', message=flask.request.args['message'])
+def admin_login_page(message : str = '') -> str:
+    if message:
+        return flask.render_template('admin/adminlogin.html', message=message)
 
     return flask.render_template('admin/adminlogin.html')
 
@@ -76,22 +77,25 @@ def admin_login() -> Union[str, flask.Response]:
         flask.session['admin'] = True
         return flask.redirect('/adminpanel')
 
-    return flask.redirect(flask.url_for('.admin_login_page', message='Username and/or password incorrect.'))
+    return admin_login_page('Username and/or password incorrect.')
 
 
 @APP.get('/adminpanel', subdomain='admin')
-def admin_panel_page() -> Union[str, flask.Response]:
+def admin_panel_page(message : str = '') -> str:
     if not 'admin' in flask.session or not flask.session['admin']:
         return flask.redirect('/')
 
-    if flask.request.args:
-        return flask.render_template('admin/adminpanel.html', message=flask.request.args['message'])
+    arts_details = DAO.get_arts_names()
+    arts_names = (build_art_name_object_from_dao(art_details) for art_details in arts_details)
 
-    return flask.render_template('admin/adminpanel.html')
+    if message:
+        return flask.render_template('admin/adminpanel.html', message=message, arts_names=arts_names)
+
+    return flask.render_template('admin/adminpanel.html', arts_names=arts_names)
 
 
 @APP.post('/adminpanel/add_art', subdomain='admin')
-def admin_add_art() -> flask.Response:
+def admin_add_art() -> str:
     if not 'admin' in flask.session or not flask.session['admin']:
         return flask.redirect('/')
 
@@ -103,16 +107,36 @@ def admin_add_art() -> flask.Response:
     image = flask.request.files['image']
     video = flask.request.files['video']
 
-    try:
-        new_art_id = str(DAO.add_art(artists, name, description, creation_date, video.filename != '')[0][0])
+    new_art_id = str(DAO.add_art(artists, name, description, creation_date, video.filename != '')[0][0])
 
-        UploadsManager.upload_image(new_art_id, image.read())
-        if video.filename:
-            UploadsManager.upload_video(new_art_id, video.read())
-    except Exception as e:
-        return flask.redirect(flask.url_for('.admin_panel_page', message=f'Failed to add art: {e}.'))
+    UploadsManager.upload_image(new_art_id, image.read())
+    if video.filename:
+        UploadsManager.upload_video(new_art_id, video.read())
 
-    return flask.redirect(flask.url_for('.admin_panel_page', message=f'Art added successfully under ID: {new_art_id}.'))
+    return admin_panel_page(f'Art added successfully under ID: {new_art_id}.')
+
+
+@APP.post('/adminpanel/delete_art', subdomain='admin')
+def admin_delete_art() -> str:
+    if not 'admin' in flask.session or not flask.session['admin']:
+        return flask.redirect('/')
+
+    art_id = int(flask.request.form['art-delete-picker'])
+    is_video_included = bool(DAO.get_video_status(art_id)[0][0])
+
+    DAO.delete_art(art_id)
+    UploadsManager.delete_image(art_id)
+    if is_video_included:
+        UploadsManager.delete_video(art_id)
+
+    return admin_panel_page(f'Deleted art under ID: {art_id}.')
+
+
+def build_art_name_object_from_dao(details : List[Tuple[int, str]]) -> ArtName:
+    art_id, name = details
+    art_name = ArtName(art_id, name)
+
+    return art_name
 
 
 if __name__ == '__main__':

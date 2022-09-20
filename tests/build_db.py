@@ -46,7 +46,7 @@ if __name__ == '__main__':
     conn = sqlite3.connect('./project/database/gallery.db')
     curr = conn.cursor()
 
-    curr.execute(delete_item(23))
+    curr.execute(delete_item(26))
     
     conn.commit()
 

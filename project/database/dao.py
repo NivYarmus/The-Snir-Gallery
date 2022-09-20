@@ -60,3 +60,12 @@ class Dao:
         self.__execute_query_and_save(ADD_ART_QUERY, artists, name, description, creation_date, int(is_video_included))
 
         return self.__execute_query(GET_MAX_ID_QUERY)
+
+    def get_arts_names(self : Self) -> List[Tuple[int, str]]:
+        return self.__execute_query(GET_ARTS_NAMES_QUERY)
+
+    def delete_art(self : Self, art_id : int) -> None:
+        return self.__execute_query_and_save(DELETE_ART_QUERY, art_id)
+
+    def get_video_status(self : Self, art_id : int) -> None:
+        return self.__execute_query(GET_VIDEO_STATUS_QUERY, art_id)

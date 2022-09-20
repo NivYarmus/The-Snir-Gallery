@@ -60,7 +60,16 @@
                     <div data-toggle="collapse" data-target="#delete">Delete Art</div>
                 </div>
                 <div class="card-body collapse" id="delete">
-                    Coming soon...
+                    <form method="post" onsubmit="return IsEmpty('art-delete-picker');" action="{{ url_for('admin_delete_art') }}">
+                        <select id="art-delete-picker" name="art-delete-picker">
+                            <option value="">-- Please select an option </option>
+                            {% for art_name in arts_names %}
+                                <option value={{ art_name.id }}>{{ art_name.name }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <input type="submit" value="Delete">
+                    </form>
                 </div>
             </div>
         </div>

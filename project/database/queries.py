@@ -41,8 +41,22 @@ ADD_ART_QUERY = """
                 """
 
 GET_MAX_ID_QUERY = """
-                    SELECT
-                    MAX(ID)
-                    FROM
-                    Arts;
+                    SELECT MAX(ID)
+                    FROM Arts;
                     """
+
+GET_ARTS_NAMES_QUERY = """
+                        SELECT ID, Name
+                        FROM Arts;
+                        """
+
+DELETE_ART_QUERY = """
+                    DELETE FROM Arts
+                    WHERE ID = ?;
+                    """
+
+GET_VIDEO_STATUS_QUERY = """
+                        SELECT Is_Video_Included
+                        FROM Arts
+                        WHERE ID = ?;
+                        """

@@ -8,3 +8,8 @@ function Preview(uploadID, previewID)
         document.getElementById(previewID).src = oFReader.target.result;
     };
 };
+
+function IsEmpty(ID)
+{
+    return document.getElementById(ID).value.length > 0;
+};
