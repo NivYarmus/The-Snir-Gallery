@@ -8,6 +8,12 @@
         Creation_Date TEXT NOT NULL,
         Is_Video_Included INTEGER NOT NULL
     )
+    
+    TABLE Admins
+    (
+        Username TEXT UNIQUE NOT NULL,
+        Password TEXT NOT NULL
+    )
 """
 
 
@@ -71,4 +77,25 @@ EDIT_ART_QUERY = """
                 UPDATE Arts
                 SET Artists = ?, Name = ?, Description = ?, Creation_Date = ?, Is_Video_Included = ?
                 WHERE ID = ?;
+                """
+
+
+CREATE_ADMINS_TABLE_QUERY = """
+                            CREATE TABLE IF NOT EXISTS Admins
+                            (
+                                Username TEXT UNIQUE NOT NULL,
+                                Password TEXT NOT NULL
+                            );
+                            """
+
+ADD_ADMIN_QUERY = """
+                    INSERT INTO
+                    Admins (Username, Password)
+                    VALUES (?, ?);
+                    """
+
+IS_ADMIN_QUERY = """
+                SELECT COUNT(*)
+                FROM Admins
+                WHERE Username = ? AND Password = ?;
                 """

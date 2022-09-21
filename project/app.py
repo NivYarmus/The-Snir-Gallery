@@ -1,5 +1,6 @@
 import flask
 from flask_session import Session
+from Crypto.Hash import SHA256
 
 from typing import Tuple, Union
 
@@ -73,7 +74,13 @@ def admin_login() -> Union[str, flask.Response]:
     username = flask.request.form['username']
     password = flask.request.form['password']
 
-    if username == 'admin' and password == 'pass':
+    username_sha = SHA256.new()
+    password_sha = SHA256.new()
+
+    username_sha.update(username.encode())
+    password_sha.update(password.encode())
+
+    if DAO.is_admin(username_sha.hexdigest(), password_sha.hexdigest()):
         flask.session['admin'] = True
         return flask.redirect('/adminpanel')
 
@@ -174,6 +181,26 @@ def admin_edit_picker_change() -> str:
 
     return admin_panel_page(art=art)
 
+
+@APP.post('/add_admin', subdomain='admin')
+def add_admin() -> str:
+    if not 'admin' in flask.session or not flask.session['admin']:
+        return flask.redirect('/')
+
+    username = flask.request.form['add_admin_username']
+    password = flask.request.form['add_admin_password']
+
+    username_sha = SHA256.new()
+    password_sha = SHA256.new()
+
+    try:
+        username_sha.update(username.encode())
+        password_sha.update(password.encode())
+        DAO.add_admin(username_sha.hexdigest(), password_sha.hexdigest())
+    except:
+        return admin_panel_page(f'Failed to add {username} to admins.')
+
+    return admin_panel_page(f'Admin {username} added successfully.')
 
 def build_art_name_object_from_dao(details : Tuple[int, str]) -> ArtName:
     art_id, name = details

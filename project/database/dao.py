@@ -13,6 +13,7 @@ class Dao:
 
         self.__create_database()
         self.__create_arts_table()
+        self.__create_admins_table()
 
     def __create_database(self : Self) -> None:
         try:
@@ -23,6 +24,9 @@ class Dao:
 
     def __create_arts_table(self : Self) -> None:
         self.__execute_query_and_save(CREATE_ARTS_TABLE_QUERY)
+
+    def __create_admins_table(self : Self) -> None:
+        self.__execute_query_and_save(CREATE_ADMINS_TABLE_QUERY)
 
     def __open_db(self : Self) -> None:
         self.__conn = sqlite3.connect(DATABASE_PATH)
@@ -73,5 +77,11 @@ class Dao:
     def get_video_status(self : Self, art_id : int) -> None:
         return self.__execute_query(GET_VIDEO_STATUS_QUERY, art_id)
 
-    def edit_art(self : Self, art_id : int, artists : str, name : str, description : str, creation_date : str, is_video_included : bool):
+    def edit_art(self : Self, art_id : int, artists : str, name : str, description : str, creation_date : str, is_video_included : bool) -> None:
         self.__execute_query_and_save(EDIT_ART_QUERY, artists, name, description, creation_date, int(is_video_included), art_id)
+
+    def add_admin(self : Self, username : str, password : str) -> None:
+        self.__execute_query_and_save(ADD_ADMIN_QUERY, username, password)
+
+    def is_admin(self : Self, username : str, password : str) -> bool:
+        return bool(self.__execute_query(IS_ADMIN_QUERY, username, password)[0][0])
