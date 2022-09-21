@@ -10,3 +10,8 @@ img, video
     height: 100%;
     display: block;
 }
+
+.Hide
+{
+    display: none;
+}

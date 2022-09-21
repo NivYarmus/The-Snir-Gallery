@@ -23,15 +23,21 @@ CREATE_ARTS_TABLE_QUERY =   """
                             );
                             """
 
-GET_ARTS_QUERY =    """
+GET_ARTS_INTRO_QUERY =    """
                     SELECT ID, Name, Description
                     FROM Arts;
                     """
 
-GET_ART_QUERY = """
+GET_ART_BY_NAME_QUERY = """
                 SELECT *
                 FROM Arts
                 WHERE Name = ?;
+                """
+
+GET_ART_BY_ID_QUERY = """
+                SELECT *
+                FROM Arts
+                WHERE ID = ?;
                 """
 
 ADD_ART_QUERY = """
@@ -60,3 +66,9 @@ GET_VIDEO_STATUS_QUERY = """
                         FROM Arts
                         WHERE ID = ?;
                         """
+
+EDIT_ART_QUERY = """
+                UPDATE Arts
+                SET Artists = ?, Name = ?, Description = ?, Creation_Date = ?, Is_Video_Included = ?
+                WHERE ID = ?;
+                """

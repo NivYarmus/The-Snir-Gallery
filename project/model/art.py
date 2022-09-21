@@ -5,6 +5,7 @@ from model.constants import ART_IMAGE_PATH, ART_VIDEO_PATH, ART_IMAGE_EXTENSION_
 
 class Art:
     def __init__(self : Self, id : int, artists : str, name : str, description : str, creation_date : str, is_video_included : int) -> None:
+        self.id = id
         self.name = name
         self.artists = artists
         self.description = description

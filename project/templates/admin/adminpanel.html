@@ -25,52 +25,89 @@
                 </div>
                 <div class="card-body collapse" id="add">
                     <form method="post" enctype="multipart/form-data" action="{{ url_for('admin_add_art') }}">
-                        <label for="artists">Artists:</label>
-                        <input type="text" id="artists" name="artists" required>
+                        <label for="add_artists">Artists:</label>
+                        <input type="text" id="add_artists" name="add_artists" required>
 
-                        <label for="name">Name:</label>
-                        <input type="text" id="name" name="name" required>
+                        <label for="add_name">Name:</label>
+                        <input type="text" id="add_name" name="add_name" required>
 
-                        <label for="description">Description:</label>
-                        <input type="text" id="description" name="description" required>
+                        <label for="add_description">Description:</label>
+                        <input type="text" id="add_description" name="add_description" required>
 
-                        <label for="creation_date">Creation Date:</label>
-                        <input type="text" id="creation_date" name="creation_date" required>
+                        <label for="add_creation_date">Creation Date:</label>
+                        <input type="text" id="add_creation_date" name="add_creation_date" required>
 
-                        <label for="image">Select a JPEG image:</label>
-                        <input type="file" accept="image/jpeg" onchange="Preview('imageUpload', 'imagePreview');" id="imageUpload" name="image" required>
-                        <img id="imagePreview">
+                        <label for="add_imageUpload">Select a JPEG image:</label>
+                        <input type="file" accept="image/jpeg" onchange="Preview('add_imageUpload', 'add_imagePreview');" id="add_imageUpload" name="add_image" required>
+                        <img id="add_imagePreview">
 
-                        <label for="video">Select a MP3 video (not mandetory):</label>
-                        <input type="file" accept="video/mp3" onchange="Preview('videoUpload', 'videoPreview');" id="videoUpload" name="video">
-                        <img id="videoPreview">
+                        <label for="add_videoUpload">Select a MP3 video (not mandetory):</label>
+                        <input type="file" accept="video/mp3" onchange="Preview('add_videoUpload', 'add_videoPreview');" id="add_videoUpload" name="add_video">
+                        <img id="add_videoPreview">
 
                         <input type="submit" value="Add Art">
                     </form>
                 </div>
 
-                <div class="card-header">
-                    <div data-toggle="collapse" data-target="#edit">Edit Art</div>
-                </div>
-                <div class="card-body collapse" id="edit">
-                    Coming soon...
-                </div>
+                {% if arts_names|length > 0 %}
+                    <div class="card-header">
+                        <div data-toggle="collapse" data-target="#edit">Edit Art</div>
+                    </div>
+                    <div class="card-body collapse" id="edit">
+                        <form method="post" action="{{ url_for('admin_edit_picker_change') }}">
+                            <select id="art-edit-picker" name="art-edit-picker" onchange="this.form.submit();">
+                                {% for art_name in arts_names %}
+                                    <option value={{ art_name.id }}>{{ art_name.name }}</option>
+                                {% endfor %}
+                            </select>
 
-                <div class="card-header">
-                    <div data-toggle="collapse" data-target="#delete">Delete Art</div>
-                </div>
-                <div class="card-body collapse" id="delete">
-                    <form method="post" onsubmit="return IsEmpty('art-delete-picker');" action="{{ url_for('admin_delete_art') }}">
-                        <select id="art-delete-picker" name="art-delete-picker">
-                            <option value="">-- Please select an option </option>
-                            {% for art_name in arts_names %}
-                                <option value={{ art_name.id }}>{{ art_name.name }}</option>
-                            {% endfor %}
-                        </select>
+                            <input class="Hide" type="submit" disabled>
+                        </form>
 
-                        <input type="submit" value="Delete">
-                    </form>
-                </div>
+                        <form method="post" enctype="multipart/form-data" action="{{ url_for('admin_edit_art') }}">
+                            <label for="edit_id">ID:</label>
+                            <input type="text" id="edit_id" name="edit_id" value="{{ art.id }}" readonly>
+
+                            <label for="edit_artists">Artists:</label>
+                            <input type="text" id="edit_artists" name="edit_artists" value="{{ art.artists }}" required>
+
+                            <label for="edit_name">Name:</label>
+                            <input type="text" id="edit_name" name="edit_name" value="{{ art.name }}" required>
+
+                            <label for="edit_description">Description:</label>
+                            <input type="text" id="edit_description" name="edit_description" value="{{ art.description }}" required>
+
+                            <label for="edit_creation_date">Creation Date:</label>
+                            <input type="text" id="edit_creation_date" name="edit_creation_date" value="{{ art.creation_date }}" required>
+
+                            <label for="edit_imageUpload">Select a JPEG image:</label>
+                            <input type="file" accept="image/jpeg" onchange="Preview('edit_imageUpload', 'edit_imagePreview');" id="edit_imageUpload" name="edit_image">
+                            <img id="edit_imagePreview" src="{{ art.image_path }}">
+
+                            <label for="edit_videoUpload">Select a MP3 video (not mandetory):</label>
+                            <input type="file" accept="video/mp3" onchange="Preview('edit_videoUpload', 'edit_videoPreview');" id="edit_videoUpload" name="edit_video">
+                            <img id="edit_videoPreview" src="{{ art.video_path }}">
+
+                            <input type="submit" value="Edit Art">
+                        </form>
+                    </div>
+
+                    <div class="card-header">
+                        <div data-toggle="collapse" data-target="#delete">Delete Art</div>
+                    </div>
+                    <div class="card-body collapse" id="delete">
+                        <form method="post" onsubmit="return IsEmpty('art-delete-picker');" action="{{ url_for('admin_delete_art') }}">
+                            <select id="art-delete-picker" name="art-delete-picker">
+                                <option value="">-- Please select an option --</option>
+                                {% for art_name in arts_names %}
+                                    <option value={{ art_name.id }}>{{ art_name.name }}</option>
+                                {% endfor %}
+                            </select>
+
+                            <input type="submit" value="Delete">
+                        </form>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </body>

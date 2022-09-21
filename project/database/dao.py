@@ -50,11 +50,14 @@ class Dao:
     def __save_changes(self : Self) -> None:
         self.__conn.commit()
 
-    def get_arts(self : Self) -> List[Tuple[int, str, str]]:
-        return self.__execute_query(GET_ARTS_QUERY)
+    def get_arts_intro(self : Self) -> List[Tuple[int, str, str]]:
+        return self.__execute_query(GET_ARTS_INTRO_QUERY)
 
     def get_art(self : Self, name : str) -> List[Tuple[int, str, str, str, int]]:
-        return self.__execute_query(GET_ART_QUERY, name)
+        return self.__execute_query(GET_ART_BY_NAME_QUERY, name)
+
+    def get_art(self : Self, art_id : int) -> List[Tuple[int, str, str, str, int]]:
+        return self.__execute_query(GET_ART_BY_ID_QUERY, art_id)
 
     def add_art(self : Self, artists : str, name : str, description : str, creation_date : str, is_video_included : bool):
         self.__execute_query_and_save(ADD_ART_QUERY, artists, name, description, creation_date, int(is_video_included))
@@ -65,7 +68,10 @@ class Dao:
         return self.__execute_query(GET_ARTS_NAMES_QUERY)
 
     def delete_art(self : Self, art_id : int) -> None:
-        return self.__execute_query_and_save(DELETE_ART_QUERY, art_id)
+        self.__execute_query_and_save(DELETE_ART_QUERY, art_id)
 
     def get_video_status(self : Self, art_id : int) -> None:
         return self.__execute_query(GET_VIDEO_STATUS_QUERY, art_id)
+
+    def edit_art(self : Self, art_id : int, artists : str, name : str, description : str, creation_date : str, is_video_included : bool):
+        self.__execute_query_and_save(EDIT_ART_QUERY, artists, name, description, creation_date, int(is_video_included), art_id)
