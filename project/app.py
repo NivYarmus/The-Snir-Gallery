@@ -1,6 +1,7 @@
 import flask
 from flask_session import Session
 from Crypto.Hash import SHA256
+import os
 
 from typing import Tuple, Union
 
@@ -12,6 +13,21 @@ from model.artName import ArtName
 
 
 APP = flask.Flask(__name__, static_folder=None)
+APP.secret_key = os.urandom(32)
+APP.static_folder = 'static'
+
+APP.config['SERVER_NAME'] = 'thesnirgallery.com:80'
+APP.config['SESSION_TYPE'] = 'filesystem'
+
+APP.add_url_rule('/<path:filename>',
+                endpoint='static',
+                subdomain='',
+                view_func=APP.send_static_file)
+APP.add_url_rule('/<path:filename>',
+                endpoint='static',
+                subdomain='admin',
+                view_func=APP.send_static_file)
+Session(APP)
 
 DAO = Dao()
 
@@ -210,19 +226,4 @@ def build_art_name_object_from_dao(details : Tuple[int, str]) -> ArtName:
 
 
 if __name__ == '__main__':
-    APP.secret_key = 'secret'
-    APP.static_folder = 'static'
-
-    APP.config['SERVER_NAME'] = 'thesnirgallery.com:80'
-    APP.config['SESSION_TYPE'] = 'filesystem'
-
-    APP.add_url_rule('/<path:filename>',
-                    endpoint='static',
-                    subdomain='',
-                    view_func=APP.send_static_file)
-    APP.add_url_rule('/<path:filename>',
-                    endpoint='static',
-                    subdomain='admin',
-                    view_func=APP.send_static_file)
-    Session(APP)
     APP.run()
