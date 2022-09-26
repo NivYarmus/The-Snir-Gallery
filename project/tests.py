@@ -14,12 +14,13 @@ conn = sqlite3.connect('./project/database/gallery.db')
 curr = conn.cursor()
 
 
-curr.execute(CREATE_ADMINS_TABLE_QUERY)
+#curr.execute(CREATE_ADMINS_TABLE_QUERY)
+curr.execute("DELETE FROM Arts;")
 
-username_sha.update(username.encode())
-password_sha.update(password.encode())
+#username_sha.update(username.encode())
+#password_sha.update(password.encode())
 
-curr.execute(ADD_ADMIN_QUERY, (username_sha.hexdigest(), password_sha.hexdigest()))
+#curr.execute(ADD_ADMIN_QUERY, (username_sha.hexdigest(), password_sha.hexdigest()))
 
 
 conn.commit()

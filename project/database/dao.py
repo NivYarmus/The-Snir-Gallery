@@ -57,10 +57,10 @@ class Dao:
     def get_arts_intro(self : Self) -> List[Tuple[int, str, str]]:
         return self.__execute_query(GET_ARTS_INTRO_QUERY)
 
-    def get_art(self : Self, name : str) -> List[Tuple[int, str, str, str, int]]:
+    def get_art_by_name(self : Self, name : str) -> List[Tuple[int, str, str, str, int]]:
         return self.__execute_query(GET_ART_BY_NAME_QUERY, name)
 
-    def get_art(self : Self, art_id : int) -> List[Tuple[int, str, str, str, int]]:
+    def get_art_by_id(self : Self, art_id : int) -> List[Tuple[int, str, str, str, int]]:
         return self.__execute_query(GET_ART_BY_ID_QUERY, art_id)
 
     def add_art(self : Self, artists : str, name : str, description : str, creation_date : str, is_video_included : bool):

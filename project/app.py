@@ -53,7 +53,7 @@ def gallery_page() -> Union[str, flask.Response]:
 @APP.get('/artdetails')
 def art_details_page() -> Union[str, flask.Response]:
     name = flask.request.args.get('name', default='', type=str)
-    art_details = DAO.get_art(name)
+    art_details = DAO.get_art_by_name(name)
 
     if art_details:
         art = build_art_object_from_dao(art_details[0])
@@ -121,7 +121,7 @@ def admin_panel_page(message : str = '', art : Art = None) -> str:
 def admin_add_art() -> str:
     if not 'admin' in flask.session or not flask.session['admin']:
         return flask.redirect('/')
-
+    
     artists = flask.request.form['add_artists']
     name = flask.request.form['add_name']
     description = flask.request.form['add_description']
@@ -192,7 +192,7 @@ def admin_edit_picker_change() -> str:
 
     art_id = int(flask.request.form['art-edit-picker'])
 
-    art_details = DAO.get_art(art_id)
+    art_details = DAO.get_art_by_id(art_id)
     art = build_art_object_from_dao(art_details[0])
 
     return admin_panel_page(art=art)
